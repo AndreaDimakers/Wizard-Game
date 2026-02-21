@@ -58,6 +58,8 @@ class Encantos(models.Model):
 
     costo_mana = models.IntegerField(default=0)
 
+    curacion = models.IntegerField(default=0)
+
     tipo_encanto = models.CharField(max_length=15)
     
     def __str__(self):

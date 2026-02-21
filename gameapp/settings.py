@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'game.urls'
+ROOT_URLCONF = 'gameapp.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'game.wsgi.application'
+WSGI_APPLICATION = 'gameapp.wsgi.application'
 
 
 DATABASES = {
@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'cuentas.User'
+AUTH_USER_MODEL = 'user.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

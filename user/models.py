@@ -13,4 +13,3 @@ class User(AbstractUser):
     wins=models.IntegerField(default=0)
 
         
-    

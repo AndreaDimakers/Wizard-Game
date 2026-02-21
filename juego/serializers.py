@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import MatchRoom, Jugador, Encantos
-from user.models import User
+
 
 class MatchRoomSerializer(serializers.ModelSerializer):
 
@@ -8,20 +8,21 @@ class MatchRoomSerializer(serializers.ModelSerializer):
         model = MatchRoom
         fields = [
             "id","status","nombre_room",
-            "codigo","ganador","creado"
+            "codigo","ganador","creado",
+            "curacion"
         ]
 
 
 class JugadorSerializer(serializers.ModelSerializer):
 
-    class Meta:
+    username = serializers.CharField(source="user.username", read_only=True)
 
-        username = serializers.CharField(source=user.username, read_only=True)
+    class Meta:
 
         model = Jugador
         fields = [
-            "room","user","hp",
-            "mana","turno"
+            "id","room","user","hp",
+            "mana","turno","user","username"
         ]
 
 class EncantosSerializer(serializers.ModelSerializer):
