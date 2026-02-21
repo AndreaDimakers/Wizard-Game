@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User
+from .utils import Avatars
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -16,3 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
             "id","username","password",
             "avatar","wins"
         ]
+
+class CrearUserSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+    avatar = serializers.ChoiceField(choices=Avatars.choices)
+    
