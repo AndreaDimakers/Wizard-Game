@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from juego.opciones import StatusPartida
+from juego.utils import StatusPartida
 
 class MatchRoom(models.Model):
 
@@ -58,8 +58,8 @@ class Encantos(models.Model):
 
     costo_mana = models.IntegerField(default=0)
 
-
-
+    tipo_encanto = models.CharField(max_length=15)
+    
     def __str__(self):
     
         return self.nombre
