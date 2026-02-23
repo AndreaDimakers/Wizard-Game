@@ -8,9 +8,12 @@ class MatchRoomSerializer(serializers.ModelSerializer):
         model = MatchRoom
         fields = [
             "id","status","nombre_room",
-            "codigo","ganador","creado",
-            "curacion"
+            "codigo","ganador","creado"
         ]
+
+class CrearMatchRoomSerializer(serializers.Serializer):
+
+    nombre_room = serializers.CharField()
 
 
 class JugadorSerializer(serializers.ModelSerializer):
@@ -31,6 +34,6 @@ class EncantosSerializer(serializers.ModelSerializer):
 
         model = Encantos
         fields = [
-            "nombre","daño","costo_mana"
+            "nombre","daño","costo_mana",
             "tipo_encanto"
         ]
