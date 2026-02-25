@@ -25,7 +25,7 @@ class JugadorSerializer(serializers.ModelSerializer):
         model = Jugador
         fields = [
             "id","room","user","hp",
-            "mana","turno","user","username"
+            "mana","turno","username"
         ]
 
 class EncantosSerializer(serializers.ModelSerializer):
