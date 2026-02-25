@@ -52,7 +52,7 @@ class Jugador(models.Model):
 
 class Encantos(models.Model):
 
-    nombre = models.CharField(max_length=50)
+    encanto = models.CharField(max_length=50)
 
     daño = models.IntegerField(default=0)
 
@@ -64,5 +64,5 @@ class Encantos(models.Model):
     
     def __str__(self):
     
-        return self.nombre
+        return self.Encanto
     

@@ -7,3 +7,5 @@ class Avatars(models.TextChoices):
         SNAKE = "snake", "Snake"
         RAVEN = "raven", "Raven"
 
+
+

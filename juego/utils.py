@@ -7,3 +7,10 @@ class StatusPartida(models.TextChoices):
         TERNINADO = "terminado", "Juego terminado"
 
 
+
+
+class Encantos(models.TextChoices):
+
+        FUEGO = "fuego", "Fuego"
+        HIELO = "hielo", "Hielo"
+        

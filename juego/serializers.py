@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import MatchRoom, Jugador, Encantos
-
+from .utils import Encantos
 
 class MatchRoomSerializer(serializers.ModelSerializer):
 
@@ -14,6 +14,11 @@ class MatchRoomSerializer(serializers.ModelSerializer):
 class CrearMatchRoomSerializer(serializers.Serializer):
 
     nombre_room = serializers.CharField()
+
+
+class UnirseMatchRoom(serializers.Serializer):
+
+        codigo = serializers.CharField()
 
 
 class JugadorSerializer(serializers.ModelSerializer):
@@ -34,6 +39,11 @@ class EncantosSerializer(serializers.ModelSerializer):
 
         model = Encantos
         fields = [
-            "nombre","daño","costo_mana",
+            "encanto","daño","costo_mana",
             "tipo_encanto"
         ]
+
+class UsarEncantoSerializer(serializers.Serializer):
+    
+    encanto = serializers.ChoiceField(choices=Encantos.choices)
+    
