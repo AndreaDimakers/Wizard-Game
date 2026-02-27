@@ -15,11 +15,9 @@ class CrearMatchRoomSerializer(serializers.Serializer):
 
     nombre_room = serializers.CharField()
 
-
 class UnirseMatchRoom(serializers.Serializer):
 
         codigo = serializers.CharField()
-
 
 class JugadorSerializer(serializers.ModelSerializer):
 
@@ -39,11 +37,12 @@ class EncantosSerializer(serializers.ModelSerializer):
 
         model = Encantos
         fields = [
-            "encanto","daño","costo_mana",
+            "nombre","daño","costo_mana",
             "tipo_encanto"
         ]
 
 class UsarEncantoSerializer(serializers.Serializer):
-    
-    encanto = serializers.ChoiceField(choices=Encantos.choices)
+    encanto = serializers.PrimaryKeyRelatedField(
+        queryset=Encantos.objects.all()
+        )
     

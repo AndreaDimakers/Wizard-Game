@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from juego.utils import StatusPartida
+from juego.utils import StatusPartida, TipoEncanto
 
 class MatchRoom(models.Model):
 
@@ -25,7 +25,7 @@ class MatchRoom(models.Model):
     creado = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.nombre} ({self.codigo})"
+        return f"{self.nombre_room} ({self.codigo})"
 
 
 class Jugador(models.Model):
@@ -52,7 +52,7 @@ class Jugador(models.Model):
 
 class Encantos(models.Model):
 
-    encanto = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50)
 
     daño = models.IntegerField(default=0)
 
@@ -60,9 +60,9 @@ class Encantos(models.Model):
 
     curacion = models.IntegerField(default=0)
 
-    tipo_encanto = models.CharField(max_length=15)
+    tipo_encanto = models.CharField(max_length=15, choices=TipoEncanto.choices)
     
     def __str__(self):
     
-        return self.Encanto
+        return self.nombre
     
