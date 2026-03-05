@@ -45,4 +45,4 @@ class UsarEncantoSerializer(serializers.Serializer):
     encanto = serializers.PrimaryKeyRelatedField(
         queryset=Encantos.objects.all()
         )
-    
+     
