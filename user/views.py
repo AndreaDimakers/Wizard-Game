@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from.serializers import CrearUserSerializer, UserSerializer
 from .service import CrearUsuario
+from .utils import Avatars
 
 class RegistroViews(APIView):
     permission_classes = [AllowAny]
@@ -33,9 +34,6 @@ class RegistroViews(APIView):
                 status=status.HTTP_201_CREATED
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)             
-
-                
-# Create your views here.
 
 def pagina_registro(request):
     if request.method == 'POST':
@@ -65,6 +63,4 @@ def pagina_registro(request):
     
     return render(request, 'user/registro.html')
         
-
-
 
