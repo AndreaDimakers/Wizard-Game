@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from.serializers import CrearUserSerializer, UserSerializer
 from .service import CrearUsuario
+from .utils import Avatars
+
 
 class RegistroViews(APIView):
     permission_classes = [AllowAny]
@@ -63,7 +65,7 @@ def pagina_registro(request):
             messages.error(request, "El usuario ya existe.")
             return render(request, 'user/registro.html')
     
-    return render(request, 'user/registro.html')
+    return render(request, 'user/registro.html',{ 'avatars': Avatars.choices })
         
 
 
