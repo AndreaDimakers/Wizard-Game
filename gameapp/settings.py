@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-k#jtx+#vbdj@+6kpi+xdz-@znf!b+bvk37x=h(@sn-_z2-1u0r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['idmdev.ddns.net']
+ALLOWED_HOSTS = ['idmdev.ddns.net','127.0.0.1']
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

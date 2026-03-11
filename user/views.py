@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from.serializers import CrearUserSerializer, UserSerializer
-from .service import CrearUsuario
+from .uso import registrar_usuario
 from .utils import Avatars
 
 
@@ -17,7 +17,7 @@ class RegistroViews(APIView):
         serializer = CrearUserSerializer(data=request.data)
         if serializer.is_valid():
             try:
-                user = CrearUsuario(
+                user = registrar_usuario(
                     username=serializer.validated_data['usernamme'],
                     password=serializer.validated_data['password'],
                     acatar=serializer.validated_data('avatar', None)
@@ -36,9 +36,7 @@ class RegistroViews(APIView):
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)             
 
-                
-# Create your views here.
-
+            
 def pagina_registro(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -52,7 +50,7 @@ def pagina_registro(request):
         
         try:
 
-            user = CrearUsuario(
+            user = registrar_usuario(
                 username=username,
                 password=password,
                 avatar=avatar
