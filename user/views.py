@@ -9,32 +9,32 @@ from.serializers import CrearUserSerializer, UserSerializer
 from .uso import registrar_usuario
 from .utils import Avatars
 
-
 class RegistroViews(APIView):
+    
     permission_classes = [AllowAny]
 
     def post(self, request):
         serializer = CrearUserSerializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                user = registrar_usuario(
-                    username=serializer.validated_data['usernamme'],
-                    password=serializer.validated_data['password'],
-                    acatar=serializer.validated_data('avatar', None)
-                )
 
-            except IntegrityError:
-                return Response(
-                    {"error": "El Username ya existe."},
-                    status=status.HTTP_409_CONFLICT
-                )
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = registrar_usuario(
+                username=serializer.validated_data['username'],
+                password=serializer.validated_data['password'],
+                avatar=serializer.validated_data.get('avatar', None)
+            )
 
             response_serializer = UserSerializer(user)
+            return Response(response_serializer.data,status=status.HTTP_201_CREATED)
+
+        except ValueError as e:
             return Response(
-                response_serializer.data,
-                status=status.HTTP_201_CREATED
-            )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)             
+                {"error": str(e)},status=status.HTTP_409_CONFLICT)
+
+
+                     
 
             
 def pagina_registro(request):
@@ -58,9 +58,8 @@ def pagina_registro(request):
 
             messages.success(request, "Registro Exitoso!")
             
-        except IntegrityError:
-
-            messages.error(request, "El usuario ya existe.")
+        except ValueError as e:
+            messages.error(request, str(e))
             return render(request, 'user/registro.html')
     
     return render(request, 'user/registro.html',{ 'avatars': Avatars.choices })
