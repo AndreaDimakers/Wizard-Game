@@ -11,7 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-
         model = User
         fields = [
             "id","username","password",
@@ -19,15 +18,9 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 class CrearUserSerializer(serializers.Serializer):
+
     username = serializers.CharField(max_length=20)
     password = serializers.CharField(write_only=True,min_length=8)
     avatar = serializers.ChoiceField(choices=Avatars.choices)
-
-    #esto debera ir en una capa de validacion
-    def validate_username(self,value):
-        if User.objects.filter(username=value).exists():
-            raise serializers.ValidationError("El Username ya existe.")
-        
-        return value
 
     

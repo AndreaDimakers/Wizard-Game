@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,6 +104,49 @@
             font-size: 14px;
         }
 
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .avatar-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #e5cdf3;
+        }
+
+        .avatar-card:hover {
+            border-color: #e94560;
+            transform: scale(1.05);
+        }
+
+        .avatar-card.selected {
+            border-color: #e94560;
+            background-color: #d4b0e8;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .avatar-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            object-fit: cover;
+        }
+
+        .avatar-card span {
+            font-size: 12px;
+            color: #db0092;
+        }
+
         .login-link a {
             color: #e94560;
             text-decoration: none;
@@ -164,17 +208,44 @@
                 >
             </div>
 
+
             <div class="form-group">
-                <label for="avatar">Avatar</label>
-                <select id="avatar" name="avatar">
-                    <option value="DEFAULT">Default</option>
-                    <!-- Add more options based on your Avatars choices -->
-                </select>
+                <label>Choose Your Avatar</label>
+                <div class="avatar-grid">
+                    {% for value, label in avatars %}
+                        <div class="avatar-card" onclick="selectAvatar(this, '{{ value }}')">
+                            <img src="{% static 'user/avatars/' %}{{ value }}.jpg" alt="{{ label }}">
+                            <span>{{ label }}</span>
+                        </div>
+                    {% endfor %}
+                    <input type="hidden" name="avatar" id="selected-avatar" value="DEFAULT">
+                </div>
             </div>
+
 
             <button type="submit">Register</button>
         </form>
-        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCard = document.querySelector('.avatar-card');
+            if (firstCard) firstCard.classList.add('selected');
+        });
+
+        function selectAvatar(card, value) {
+        // Remove selected from all cards
+            document.querySelectorAll('.avatar-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+
+        // Select clicked card
+            card.classList.add('selected');
+
+        // Update hidden input
+            document.getElementById('selected-avatar').value = value;
+        }
+    </script>
+
 </body>
 </html>

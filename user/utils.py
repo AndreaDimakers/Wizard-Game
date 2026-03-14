@@ -5,7 +5,7 @@ class Avatars(models.TextChoices):
         GATITO = "gatito", "Gatito"
         HARRY = "harry", "Harry"
         SNAPE = "snape", "Snape"
-        CUERVO = "cuervo", "cuervo"
+        CUERVO = "cuervo", "Cuervo"
 
 
 
