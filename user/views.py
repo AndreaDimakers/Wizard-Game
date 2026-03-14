@@ -33,9 +33,6 @@ class RegistroViews(APIView):
             return Response(
                 {"error": str(e)},status=status.HTTP_409_CONFLICT)
 
-
-                     
-
             
 def pagina_registro(request):
     if request.method == 'POST':
