@@ -12,7 +12,6 @@ def registrar_usuario(username,password,avatar):
     if len(password) < 8:
         raise ValueError("La contrasena debe de tener al menos 8 caracteres.")
     
-    user = User(username=username,password=password,avatar=avatar)
-    create_user = crear_usuario(user)
+    create_user = crear_usuario(username,password,avatar)
 
     return create_user
