@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffcce8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .register-container {
+            background-color: #ffb1cf;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #be3382;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #db0092;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #e5cdf3;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #c23152;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .message.success {
+            background-color: #75339e;
+        }
+
+        .message.error {
+            background-color: #e74c3c;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .avatar-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #e5cdf3;
+        }
+
+        .avatar-card:hover {
+            border-color: #e94560;
+            transform: scale(1.05);
+        }
+
+        .avatar-card.selected {
+            border-color: #e94560;
+            background-color: #d4b0e8;
+            box-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .avatar-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            object-fit: cover;
+        }
+
+        .avatar-card span {
+            font-size: 12px;
+            color: #db0092;
+        }
+
+        .login-link a {
+            color: #e94560;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Create Account</h2>
+
+        <!-- Messages -->
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input 
+                    type="password" 
+                    id="confirm_password" 
+                    name="confirm_password" 
+                    placeholder="Confirm your password"
+                    required
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label>Choose Your Avatar</label>
+                <div class="avatar-grid">
+                    {% for value, label in avatars %}
+                        <div class="avatar-card" onclick="selectAvatar(this, '{{ value }}')">
+                            <img src="{% static 'user/avatars/' %}{{ value }}.jpg" alt="{{ label }}">
+                            <span>{{ label }}</span>
+                        </div>
+                    {% endfor %}
+                    <input type="hidden" name="avatar" id="selected-avatar" value="DEFAULT">
+                </div>
+            </div>
+
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCard = document.querySelector('.avatar-card');
+            if (firstCard) firstCard.classList.add('selected');
+        });
+
+        function selectAvatar(card, value) {
+        // Remove selected from all cards
+            document.querySelectorAll('.avatar-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+
+        // Select clicked card
+            card.classList.add('selected');
+
+        // Update hidden input
+            document.getElementById('selected-avatar').value = value;
+        }
+    </script>
+
+</body>
+</html>
