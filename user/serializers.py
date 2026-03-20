@@ -23,4 +23,7 @@ class CrearUserSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True,min_length=8)
     avatar = serializers.ChoiceField(choices=Avatars.choices)
 
-    
+class LogInSerializer(serializers.Serializer):
+
+    username = serializers.CharField(max_length=20)
+    password = serializers.CharField(write_only=True,style={"input_type": "password"})

@@ -1,6 +1,7 @@
 from django.db import transaction
 from user.models import User
-from .repositorio import get_username, crear_usuario
+from rest_framework_simplejwt.tokens import RefreshToken
+from .repositorio import get_username, crear_usuario, autenticar_usuario
 
 def registrar_usuario(username,password,avatar):
 
@@ -15,3 +16,18 @@ def registrar_usuario(username,password,avatar):
     create_user = crear_usuario(username,password,avatar)
 
     return create_user
+
+
+def login_usuario(username, password):
+
+    user = autenticar_usuario(username,password)
+
+    if user is None:
+        raise ValueError("You shall not pass")
+    
+    refresh = RefreshToken.for_user(user)
+    tokens = {
+        'refresh': str(refresh),
+        'acces': str(refresh.access_token)
+    }
+    return user,tokens

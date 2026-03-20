@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - {{ user.username }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-section {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            border: 4px solid #6c63ff;
+            padding: 4px;
+            background: linear-gradient(135deg, #6c63ff 0%, #4a45b2 100%);
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .username {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .user-title {
+            font-size: 0.85rem;
+            color: #6c63ff;
+            margin-bottom: 20px;
+        }
+
+        /* ==================== STATS ==================== */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(108, 99, 255, 0.2);
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #6c63ff;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ==================== MENU BUTTONS ==================== */
+        .menu-section {
+            flex: 1;
+            padding-top: 30px;
+        }
+
+        .menu-title {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .menu-btn:hover {
+            background: rgba(108, 99, 255, 0.2);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .menu-btn.active {
+            background: linear-gradient(135deg, #6c63ff 0%, #4a45b2 100%);
+            color: #fff;
+        }
+
+        .menu-btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Placeholder buttons (disabled for now) */
+        .menu-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .menu-btn.disabled:hover {
+            transform: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        /* ==================== LOGOUT ==================== */
+        .logout-section {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 82, 82, 0.2);
+            color: #ff5252;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 82, 82, 0.3);
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-header {
+            margin-bottom: 30px;
+        }
+
+        .welcome-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-header p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .placeholder-message {
+            text-align: center;
+            color: #555;
+        }
+
+        .placeholder-message .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .placeholder-message p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- ==================== SIDEBAR ==================== -->
+        <aside class="sidebar">
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <div class="avatar-container">
+                    <img src="{% static 'user/avatars/' %}{{ user.avatar }}.jpg" alt="{{ user.username }}">
+                </div>
+                <h2 class="username">{{ user.username }}</h2>
+                <span class="user-title">🧙‍♂️ Mago</span>
+
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-number">{{ user.wins }}</div>
+                        <div class="stat-label">Victorias</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Section -->
+            <nav class="menu-section">
+                <p class="menu-title">Menú</p>
+                
+                <a href="{% url 'home' %}" class="menu-btn active">
+                    <span class="menu-btn-icon">🏠</span>
+                    Inicio
+                </a>
+
+                <!-- Future game buttons - disabled for now -->
+                <button class="menu-btn disabled" disabled title="Próximamente">
+                    <span class="menu-btn-icon">⚔️</span>
+                    Crear Partida
+                </button>
+
+                <button class="menu-btn disabled" disabled title="Próximamente">
+                    <span class="menu-btn-icon">🚪</span>
+                    Unirse a Partida
+                </button>
+            </nav>
+
+            <!-- Logout Section -->
+            <div class="logout-section">
+                <a href="{% url 'logout' %}" class="logout-btn">
+                    <span>🚪</span>
+                    Cerrar Sesión
+                </a>
+            </div>
+        </aside>
+
+        <!-- ==================== MAIN CONTENT ==================== -->
+        <main class="main-content">
+            <div class="welcome-header">
+                <h1>👋 ¡Bienvenido, {{ user.username }}!</h1>
+                <p>Prepárate para la batalla mágica</p>
+            </div>
+
+            <div class="content-area">
+                <div class="placeholder-message">
+                    <div class="icon">🎮</div>
+                    <p>Pronto podrás crear o unirte a partidas aquí</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
